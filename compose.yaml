@@ -1,0 +1,33 @@
+services:
+  db:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: pass
+    ports:
+      - 3306:3306
+
+  adminer:
+    image: adminer
+    ports:
+      - 8081:8080 # http://localhost:8081
+  
+  caddy:
+    image: caddy
+    ports:
+      - "8080:80" # http://localhost:8080
+      - "8443:443" # https://localhost:8443
+    volumes:
+      - $PWD/docker/caddy/conf:/etc/caddy
+      - $PWD/app:/var/www/html
+      - caddy_data:/data
+      - caddy_config:/config
+
+  php:
+    build: ./docker/php
+    volumes:
+      - $PWD/app:/var/www/html
+
+volumes:
+  caddy_data:
+  caddy_config:
+
