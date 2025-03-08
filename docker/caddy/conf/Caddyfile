@@ -1,4 +1,10 @@
-localhost {
+https://localhost {
+	tls internal
+	root * /var/www/html/public
+	php_fastcgi php:9000
+	file_server
+}
+http://localhost {
 	root * /var/www/html/public
 	php_fastcgi php:9000
 	file_server
